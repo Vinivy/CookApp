@@ -3,6 +3,10 @@ import { View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import SloganScreen from '@/components/Slogan/slogan';
+import Cooking from '@/components/Receitas/Cooking';
+import Navigation from '@/components/navigation/Navigation';
+
+//Fonts
 
 
 export default function HomeScreen() {
@@ -15,13 +19,15 @@ export default function HomeScreen() {
   return (
     <View style={styles.Home}>
       <StatusBar style="dark" />
-      <Text>Home</Text>
+
+      <Navigation/>
+      
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   Home: {
-    // Adicione seus estilos aqui
+    margin: 12,
   },
 });
