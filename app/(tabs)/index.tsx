@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
 import SloganScreen from '@/components/Slogan/slogan';
-import Cooking from '@/components/Receitas/Cooking';
+
 import Navigation from '@/components/navigation/Navigation';
 
 //Fonts

@@ -1,23 +1,46 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Cooking from "../Receitas/Cooking";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import CardDoce from "../ContestCooking/CardDoce";
+import CardSalgado from "../ContestCooking/CardSalgado";
+import CardAgri from "../ContestCooking/CardAgri";
+import CardGeral from "../ContestCooking/CardGeral";
+
+interface Typagem {
+    Tipo: string;
+}
 
 export default function Navigation() {
-    const [Tipo, setTipo] = useState<string | null>(null);	
-    //functions de optiosn para tipos de receitas
-    function Doce(){
-        setTipo('doce');
-    };
+    const [tipo, setTipo] = useState<string | null>(null);
+    let SelectedComponent = <CardGeral />;
 
-    function Salgada() {
-        setTipo('salgada');
+    if (tipo === "Doce") {
+        SelectedComponent = <CardDoce />;
+    } else if (tipo === "Salgada") {
+        SelectedComponent = <CardSalgado />;
+    } else if (tipo === "Agridoce") {
+        SelectedComponent = <CardAgri />;
+    }else if (tipo === null){
+        SelectedComponent = <CardGeral />;
     }
 
-    function Agridoce() {
-        setTipo('agridoce');
+    // Funções para definir o tipo de receita
+    const Doce = () => {
+        setTipo("Doce");
     };
 
-    
+    const Salgada = () => {
+        setTipo("Salgada");
+    };
+
+    const Agridoce = () => {
+        setTipo("Agridoce");
+    };
+
+    const resetOptions = useCallback(() => {
+        setTipo(null);
+        return <CardGeral />;
+    }, [<CardGeral />]);
+
     return (
         <View style={styles.Hm}>
             <Text style={styles.Title}>Escolha</Text>
@@ -28,22 +51,22 @@ export default function Navigation() {
                 <Pressable onPress={Doce} style={styles.doces}>
                     <Text>Doces</Text>
                 </Pressable>
-            
+
                 <Pressable onPress={Salgada} style={styles.salgadas}>
                     <Text>Salgadas</Text>
                 </Pressable>
-                            
+
                 <Pressable onPress={Agridoce} style={styles.agridoces}>
                     <Text>AgriDoces</Text>
                 </Pressable>
             </View>
-            <View style={styles.container}>
-                
+
+            <View>
+                {SelectedComponent}
             </View>
-            <Cooking />
         </View>
-    )
-}
+    );
+};
 
 const styles = StyleSheet.create({
     Hm: {
@@ -69,7 +92,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-around',
         paddingTop: 20,
-        paddingBottom: 20,
+        paddingBottom: 10,
     },
     
     doces:{
