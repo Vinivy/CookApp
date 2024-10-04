@@ -27,7 +27,7 @@ export default function Navigation() {
     const Doce = () => {
         setTipo("Doce");
     };
-
+    
     const Salgada = () => {
         setTipo("Salgada");
     };
@@ -41,6 +41,7 @@ export default function Navigation() {
         return <CardGeral />;
     }, [<CardGeral />]);
 
+    
     return (
         <View style={styles.Hm}>
             <Text style={styles.Title}>Escolha</Text>

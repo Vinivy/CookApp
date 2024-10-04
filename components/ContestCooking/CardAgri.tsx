@@ -1,8 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
+import Details from './Details';
 
-interface Receita {
+
+interface Receitas {
     id: number;
     receita: string;
     tipo: string;
@@ -11,9 +14,21 @@ interface Receita {
 
 export default function CardAgri() {
     const [erro, setErro] = useState<string | null>(null);
-    const [receita, setReceitas] = useState<Receita[]>([]);
+    const [receita, setReceitas] = useState<Receitas[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [descricao, setDescricao] = useState<string | null>(null);
 
+    const mostrarDetalhes = (receita: Receitas) => {
+        setDescricao(receita.receita);
+    };
+
+    const voltar = () => {
+        setDescricao(null);
+    };
+
+    if (descricao) {
+        return <Details Receita={descricao} onVoltar={voltar} />;
+    }
     useEffect(() => {
     setLoading(true);
     const fetchReceitas = async () => {
@@ -45,23 +60,16 @@ export default function CardAgri() {
                   keyExtractor={(item) => item.id.toString()}
                   scrollEnabled={true}
                   renderItem={({ item }) => (
-                    <>
+                    
                       <Pressable style={styles.caixa} key={item.id}>
-                          <Image source={{ uri: item.link_imagem }} style={{ width: 100, height: 100 }} />
-                          <Text>{item.receita}</Text>
-                          <Text>{item.tipo}</Text>
+                        <ImageBackground source={{ uri: item.link_imagem }} style={{ width: '100%', height: 150, justifyContent: 'flex-end' }} imageStyle={{ borderRadius: 10 }} >
+                          <View style={{ padding: 10}}>
+                            <Text>{item.receita}</Text>
+                            <Text>{item.tipo}</Text>
+                          </View>
+                        </ImageBackground>
                       </Pressable>
-                      <Pressable style={styles.caixa} key={item.id}>
-                          <Image source={{ uri: item.link_imagem }} style={{ width: 100, height: 100 }} />
-                          <Text>{item.receita}</Text>
-                          <Text>{item.tipo}</Text>
-                      </Pressable>
-                      <Pressable style={styles.caixa} key={item.id}>
-                          <Image source={{ uri: item.link_imagem }} style={{ width: 100, height: 100 }} />
-                          <Text>{item.receita}</Text>
-                          <Text>{item.tipo}</Text>
-                      </Pressable>
-                    </>  
+                    
                     )}
 
                   numColumns={2}
@@ -74,7 +82,7 @@ export default function CardAgri() {
 
 const styles = StyleSheet.create({
     contentContainer: {
-        flexDirection: 'column-reverse',
+        flexDirection: 'row',
         paddingBottom: 200, // Ajuste o valor conforme necessário
     },
 
@@ -86,7 +94,7 @@ const styles = StyleSheet.create({
     },
 
     caixa: {
-        width: '40%', // Ajusta a largura dos itens
+        width: 'auto', // Ajusta a largura dos itens
         marginBottom: 20, // Espaçamento entre os itens
         padding: 10,
         backgroundColor: '#fff',
@@ -96,5 +104,6 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.8,
         shadowRadius: 2,
         elevation: 2,
+        overflow: 'hidden',
     },
 });

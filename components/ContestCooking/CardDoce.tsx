@@ -59,8 +59,6 @@ export default function CardAgri() {
                           <Text>{item.tipo}</Text>
                       </Pressable>
                     )}
-                
-                
                 numColumns={2}
                 contentContainerStyle={styles.contentContainer}
                   onEndReachedThreshold={0.5} // Definindo quando carregar mais
