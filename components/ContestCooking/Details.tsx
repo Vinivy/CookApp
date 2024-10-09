@@ -1,64 +1,127 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Button, ImageBackground, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, FlatList, Image, ImageBackground, Pressable, StyleSheet, Text, View } from 'react-native';
 
-interface Ingredientes {
-    id: number;
-    receita: string;
-    tipo: string;
-    link_imagem: string;
+interface Receitas {
+  id: number;
+  receita: string;
+  tipo: string;
+  link_imagem: string;
 }
 
-const [Engredientes, setEngredientes] = useState<Ingredientes | null>(null);
-const [erro, setErro] = useState<string | null>(null);
-const [loading, setLoading] = useState<boolean>(true);
+export default function CardAgri() {
+  const [receitas, setReceitas] = useState<Receitas[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedRecipe, setSelectedRecipe] = useState<Receitas | null>(null);
 
-useEffect(() => {
-    setLoading(true);
-    const fetchReceitas = async () => {
-        try {
-            const response = await axios.get('https://api-receitas-pi.vercel.app/receitas/tipo/agridoce');
-            setEngredientes(response.data);
-        } catch (err) {
-            setErro('Erro ao carregar receitas');
-        } finally {
-            setLoading(false);
-        }
-    };
 
+  const fetchReceitas = async () => {
+    try {
+      const response = await axios.get('https://api-receitas-pi.vercel.app/receitas/tipo/agridoce');
+      setReceitas(response.data);
+    } catch (err) {
+      setError('Erro ao carregar receitas');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchReceitas();
-}, []);
+  }, []);
 
-export default function Details({Receita, onVoltar}){
-    return (
-        <View style={styles.detalhesContainer}>
-            <Text style={styles.titulo}>{Receita.receita}</Text>
-            <ImageBackground source={{ uri: Receita.link_imagem }} style={styles.imagemDetalhe} />
-            <Text style={styles.tipo}>{Receita.tipo}</Text>
-            <Button title="Voltar" onPress={onVoltar} />
-        </View>
-    );
-};
+  const handleVoltar = () => {
+    setSelectedRecipe(null);
+  };
+
+  const renderItem = ({ item }: { item: Receitas }) => (
+    <Pressable style={styles.card} key={item.id}>
+      <ImageBackground
+        source={{ uri: item.link_imagem }}
+        style={styles.imagemDetalhe}
+        imageStyle={{ borderRadius: 10 }}
+      />
+      <View style={styles.infoContainer}>
+        <Text style={styles.titulo}>{item.receita}</Text>
+        <Text style={styles.tipo}>{item.tipo}</Text>
+      </View>
+      <Button title="Voltar" onPress={handleVoltar} />
+    </Pressable>
+  );
+
+  return (
+    <>
+      {loading ? (
+        <ActivityIndicator size={50} color="#02966e" />
+      ) : error ? (
+        <Text style={{ color: 'red' }}>{error}</Text>
+      ) : (
+        <FlatList
+          data={receitas}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+          numColumns={2}
+          onEndReachedThreshold={0.5}
+          contentContainerStyle={styles.contentContainer}
+        />
+      )}
+    </>
+  );
+}
 
 const styles = StyleSheet.create({
-    detalhesContainer: {
+    container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 20,
     },
-    titulo: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 10,
+
+    overlay: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    imagemDetalhe: {
-        width: 200,
-        height: 200,
-        marginBottom: 10,
-    },
-    tipo: {
-        fontSize: 18,
+    card: {
+        width: '90%',
+        height: '80%',
         marginBottom: 20,
+        padding: 10,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.8,
+        shadowRadius: 2,
+        elevation: 2,
+        overflow: 'hidden',
     },
+  contentContainer: {
+    flexDirection: 'row',
+    paddingBottom: 200, // Adjust the value as needed
+  },
+
+  imagemDetalhe: {
+    width: '100%',
+    height: 200,
+  },
+
+  infoContainer: {
+    padding: 10,
+  },
+
+  titulo: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+
+  tipo: {
+    fontSize: 18,
+  },
 });

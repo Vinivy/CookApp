@@ -60,10 +60,11 @@ export default function Navigation() {
                 <Pressable onPress={Agridoce} style={styles.agridoces}>
                     <Text>AgriDoces</Text>
                 </Pressable>
+                
             </View>
 
             <View>
-                {SelectedComponent}
+            {SelectedComponent}
             </View>
         </View>
     );
