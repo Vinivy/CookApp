@@ -41,7 +41,7 @@ export default function Navigation() {
         return <CardGeral />;
     }, [<CardGeral />]);
 
-    
+
     return (
         <View style={styles.Hm}>
             <Text style={styles.Title}>Escolha</Text>
@@ -64,7 +64,7 @@ export default function Navigation() {
             </View>
 
             <View>
-            {SelectedComponent}
+            {SelectedComponent} 
             </View>
         </View>
     );

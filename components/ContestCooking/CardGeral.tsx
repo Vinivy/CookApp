@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import Details from './Details';
 
 interface Receita {
     id: number;
@@ -13,6 +14,7 @@ export default function CardAgri() {
     const [erro, setErro] = useState<string | null>(null);
     const [receita, setReceitas] = useState<Receita[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
+    const [selectedRecipe, setSelectedRecipe] = useState<Receita | null>(null);
 
     useEffect(() => {
     setLoading(true);
@@ -29,6 +31,10 @@ export default function CardAgri() {
 
         fetchReceitas();
     }, []);
+    
+      const handleVoltar = () => {
+        setSelectedRecipe(null);
+      };
     return (
         <>
             {// Mostra o loading enquanto carrega as receitas
@@ -52,6 +58,16 @@ export default function CardAgri() {
                       </Pressable>
                     )}
                 />
+                <Modal
+                     visible={!!selectedRecipe}
+                     animationType="slide"
+                     onRequestClose={handleVoltar}
+                >
+                 {selectedRecipe && (
+                    <Details receita={selectedRecipe} onVoltar={handleVoltar} />
+                )}
+                </Modal>
+                  
         </>
     )
 }

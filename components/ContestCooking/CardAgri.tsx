@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, ImageBackground, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Details from './Details';
 
 interface Receitas {
@@ -39,12 +39,13 @@ export default function CardAgri() {
     setSelectedRecipe(null);
   };
 
+  //esse são os conteudos CardAgri
   const renderItem = ({ item }: { item: Receitas }) => (
     <Pressable onPress={() => handleRecipePress(item)} style={styles.caixa} key={item.id}>
       <ImageBackground
         source={{ uri: item.link_imagem }}
-        style={{ width: '100%', height: 150, justifyContent: 'flex-end' }}
-        imageStyle={{ borderRadius: 10 }}
+        style={{ width: '100%', height: 150, justifyContent: 'flex-end', borderRadius: 10, overflow: 'hidden' }}
+        imageStyle={{ borderRadius: 10,  }}
       >
         <View style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
           <Text style={styles.receitaText}>{item.receita}</Text>
@@ -61,6 +62,7 @@ export default function CardAgri() {
       ) : error ? (
         <Text style={{ color: 'red' }}>{error}</Text>
       ) : (
+        //aqui são exibidos CardAgri
         <FlatList
           data={receitas}
           keyExtractor={(item) => item.id.toString()}
@@ -70,7 +72,15 @@ export default function CardAgri() {
           contentContainerStyle={styles.contentContainer}
         />
       )}
-      {selectedRecipe && <Details/>}
+      <Modal
+        visible={!!selectedRecipe}
+        animationType="slide"
+        onRequestClose={handleVoltar}
+      >
+        {selectedRecipe && (
+          <Details receita={selectedRecipe} onVoltar={handleVoltar} />
+        )}
+      </Modal>
     </>
   );
 }
@@ -82,9 +92,11 @@ const styles = StyleSheet.create({
   },
 
   caixa: {
-    width: '50%', // Set a specific width for consistency
+    width: '80%', // Set a specific width for consistency
     marginBottom: 20, // Spacing between items
+    marginLeft: 35, // Center the items
     padding: 10,
+    margin: 15,
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
