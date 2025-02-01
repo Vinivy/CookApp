@@ -150,6 +150,11 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
 
+  modPrep: {
+    padding: 20,
+    borderRadius: 10,
+  },
+
 });
 
 export default Details;

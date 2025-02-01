@@ -63,15 +63,28 @@ export default function CardAgri() {
         <Text style={{ color: 'red' }}>{error}</Text>
       ) : (
         //aqui são exibidos CardAgri
+        <ScrollView style={styles.Scroll} indicatorStyle='default' showsHorizontalScrollIndicator={false}>
+        <FlatList
+          data={receitas}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={true}
+          numColumns={2}
+          onEndReachedThreshold={0.5}
+          contentContainerStyle={styles.contentContainer}
+        />
         <FlatList
           data={receitas}
           keyExtractor={(item) => item.id.toString()}
           renderItem={renderItem}
           numColumns={2}
+          showsVerticalScrollIndicator={true}
           onEndReachedThreshold={0.5}
           contentContainerStyle={styles.contentContainer}
         />
-      )}
+        </ScrollView>
+      )
+      }
       <Modal
         visible={!!selectedRecipe}
         animationType="slide"
@@ -86,23 +99,18 @@ export default function CardAgri() {
 }
 
 const styles = StyleSheet.create({
-  contentContainer: {
-    flexDirection: 'column',
-    paddingBottom: 200, // Ajuste o valor conforme necessário
-},
 
-card: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignItems: 'center',
+contentContainer: {
+    margin: 10,
+    flexDirection: 'column',
+    gap: 20,
+    width: '100%',
 },
 
 caixa: {
-    width: '40%', // Ajusta a largura dos itens
-    marginBottom: 20, // Espaçamento entre os itens
+    flex: 1,
     padding: 10,
-    margin: 15,
+    justifyContent: 'space-evenly',
     backgroundColor: '#fff',
     borderRadius: 10,
     shadowColor: '#000',
@@ -122,10 +130,9 @@ tipoText: {
     color: '#fff',
 },
 
-Rows: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-}
+Scroll:{
+  width: '100%',
+  height: '75.4%',
+},
+
 });

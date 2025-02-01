@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
   },
 
   caixa: {
+    alignSelf: 'center',
     width: '80%', // Set a specific width for consistency
     marginBottom: 20, // Spacing between items
     marginLeft: 35, // Center the items

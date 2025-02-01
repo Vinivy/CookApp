@@ -63,7 +63,7 @@ export default function Navigation() {
                 
             </View>
 
-            <View>
+            <View style={styles.theview}>
             {SelectedComponent} 
             </View>
         </View>
@@ -73,6 +73,13 @@ export default function Navigation() {
 const styles = StyleSheet.create({
     Hm: {
 
+    },
+    theview: {
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        paddingTop: 20,
+        paddingBottom: 10,
     },
     
     Title:{
