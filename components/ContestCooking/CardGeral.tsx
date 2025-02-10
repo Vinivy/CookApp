@@ -20,7 +20,7 @@ export default function CardAgri() {
     setLoading(true);
     const fetchReceitas = async () => {
         try {
-            const response = await axios.get('https://api-receitas-pi.vercel.app/receitas/tipo/todas');
+            const response = await axios.get('https://api-receitas-pi.vercel.app/receitas/todas');
             setReceitas(response.data);
         } catch (err) {
             setErro('Erro ao carregar receitas');
@@ -69,35 +69,50 @@ export default function CardAgri() {
                 </Modal>
                   
         </>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
+    contentContainer: {
+      flexDirection: 'column',
+      paddingBottom: 200, // Ajuste o valor conforme necessário
+  },
+  
+  card: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  
+  caixa: {
+      width: '40%', // Ajusta a largura dos itens
+      marginBottom: 20, // Espaçamento entre os itens
+      padding: 10,
+      margin: 15,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.8,
+      shadowRadius: 2,
+      elevation: 2,
+  },
     
-    card: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-
-    caixa: {
-        width: '40%', // Ajusta a largura dos itens
-        marginBottom: 20, // Espaçamento entre os itens
-        padding: 10,
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.8,
-        shadowRadius: 2,
-        elevation: 2,
-    },
-
-    Rows: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-    }
-});
+  receitaText: {
+      color: '#fff',
+      fontSize: 18,
+      fontWeight: 'bold',
+  },
+  
+  tipoText: {
+      color: '#fff',
+  },
+  
+  Rows: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      alignItems: 'center',
+  }
+  });

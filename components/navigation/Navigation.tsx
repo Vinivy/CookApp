@@ -10,9 +10,10 @@ interface Typagem {
 }
 
 export default function Navigation() {
+
     const [tipo, setTipo] = useState<string | null>(null);
     let SelectedComponent = <CardGeral />;
-
+    
     if (tipo === "Doce") {
         SelectedComponent = <CardDoce />;
     } else if (tipo === "Salgada") {
@@ -36,12 +37,13 @@ export default function Navigation() {
         setTipo("Agridoce");
     };
 
+
     const resetOptions = useCallback(() => {
         setTipo(null);
         return <CardGeral />;
     }, [<CardGeral />]);
 
-
+    
     return (
         <View style={styles.Hm}>
             <Text style={styles.Title}>Escolha</Text>
@@ -65,6 +67,7 @@ export default function Navigation() {
 
             <View style={styles.theview}>
             {SelectedComponent} 
+            
             </View>
         </View>
     );

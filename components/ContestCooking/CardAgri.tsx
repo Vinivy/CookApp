@@ -53,6 +53,7 @@ export default function CardAgri() {
         </View>
       </ImageBackground>
     </Pressable>
+    
   );
 
   return (
@@ -71,6 +72,7 @@ export default function CardAgri() {
           onEndReachedThreshold={0.5}
           contentContainerStyle={styles.contentContainer}
         />
+        
       )}
       <Modal
         visible={!!selectedRecipe}
