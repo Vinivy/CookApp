@@ -1,50 +1,55 @@
-# Welcome to your Expo app 👋
+# 🍲 CookApp
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Este é o meu segundo projeto de React Native utilizando Expo. O objetivo do CookApp é fornecer uma plataforma onde os usuários possam encontrar e compartilhar receitas de culinária.
 
-## Get started
+## 📚 Bibliotecas Utilizadas
 
-1. Install dependencies
+Para desenvolver este projeto, utilizei as seguintes bibliotecas:
 
-   ```bash
-   npm install
-   ```
+- [API de Receitas](https://api-receitas-pi.vercel.app/receitas/todas): Para buscar uma variedade de receitas.
+- [React Navigation](https://reactnavigation.org/): Para navegação entre telas.
+- [Axios](https://axios-http.com/): Para realizar requisições HTTP.
+- [Redux](https://redux.js.org/): Para gerenciamento de estado.
+- [Styled Components](https://styled-components.com/): Para estilização dos componentes.
 
-2. Start the app
+## ✨ Funcionalidades
 
-   ```bash
-    npx expo start
-   ```
+- **📂 Divisão de Tipos de Receitas**: As receitas são organizadas por categorias, facilitando a navegação.
+- **🌟 Visualização Suave dos Cards**: Interface amigável com animações suaves para visualização dos cards de receitas.
+- **📝 Descrições Simples das Receitas**: Cada receita possui uma descrição clara e simples, facilitando o entendimento do modo de preparo.
 
-In the output, you'll find options to open the app in a
+## 📂 Estrutura do Projeto
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+A estrutura do projeto está organizada da seguinte forma:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+/CookApp
+   ├── /assets
+   ├── /components
+   ├── /screens
+   ├── /redux
+   ├── App.js
+   └── README.md
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+- **/assets**: Contém imagens e outros recursos estáticos.
+- **/components**: Contém componentes reutilizáveis.
+- **/screens**: Contém as telas do aplicativo.
+- **/redux**: Contém as configurações e arquivos relacionados ao Redux.
+- **App.js**: Arquivo principal do aplicativo.
 
-## Learn more
+## 🚀 Como Executar
 
-To learn more about developing your project with Expo, look at the following resources:
+Para executar o projeto, siga os passos abaixo:
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. Instale as dependências
 
-## Join the community
+    ```bash
+    npm install
+    ```
 
-Join our community of developers creating universal apps.
+2. Inicie o aplicativo
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+    ```bash
+    npx expo start
+    ```

@@ -83,6 +83,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 20,
         paddingBottom: 10,
+        height: 850,
     },
     
     Title:{

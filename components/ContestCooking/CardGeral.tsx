@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, Modal, Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, FlatList, Image, ImageBackground, Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import Details from './Details';
 
 interface Receita {
@@ -8,6 +8,9 @@ interface Receita {
     receita: string;
     tipo: string;
     link_imagem: string;
+    IngredientesBase: string;
+    ingredientes: string;
+    modo_preparo: string;
 }
 
 export default function CardAgri() {
@@ -32,32 +35,49 @@ export default function CardAgri() {
         fetchReceitas();
     }, []);
     
+    const handleRecipePress = (receita: Receita) => {
+        setSelectedRecipe(receita);
+      };
+
       const handleVoltar = () => {
         setSelectedRecipe(null);
       };
+
+      const renderItem = ({ item }: { item: Receita }) => (
+        <Pressable onPress={() => handleRecipePress(item)} style={styles.caixa}>
+            <ImageBackground
+            source={{ uri: item.link_imagem }}
+            style={{ width: '100%', height: 150, justifyContent: 'flex-end', borderRadius: 10, overflow: 'hidden' }}
+            imageStyle={{ borderRadius: 10 }}
+            >
+            <View style={{ padding: 10, backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+                <Text style={styles.receitaText}>{item.receita}</Text>
+                <Text style={styles.tipoText}>{item.tipo}</Text>
+            </View>
+            </ImageBackground>
+        </Pressable>
+      );
+
     return (
         <>
             {// Mostra o loading enquanto carrega as receitas
             loading ? ( 
                 <ActivityIndicator size={50} color={"#02966e"}/>
-                 )     : (
+            ) : erro ? (
                 <Text style={{fontSize: 50}}>{erro}</Text>
-                )
-            }
-                
+            ) : (
+                <ScrollView showsVerticalScrollIndicator={false}>
                 <FlatList
                   data={receita}
                   keyExtractor={(item) => item.id.toString()}
                   scrollEnabled={true}
-                  renderItem={({ item }) => (
-                      <Pressable style={styles.caixa} key={item.id}>
-                          <Text>{item.id}</Text>
-                          <Image source={{ uri: item.link_imagem }} style={{ width: 100, height: 100 }} />
-                          <Text>{item.receita}</Text>
-                          <Text>{item.tipo}</Text>
-                      </Pressable>
-                    )}
+                  
+                  renderItem={renderItem}
+                  numColumns={2}
+                  onEndReachedThreshold={0.5}
+                  contentContainerStyle={styles.contentContainer}
                 />
+                
                 <Modal
                      visible={!!selectedRecipe}
                      animationType="slide"
@@ -67,15 +87,17 @@ export default function CardAgri() {
                     <Details receita={selectedRecipe} onVoltar={handleVoltar} />
                 )}
                 </Modal>
-                  
+                
+                </ScrollView>
+            )}
         </>
     );
 }
-
 const styles = StyleSheet.create({
     contentContainer: {
       flexDirection: 'column',
       paddingBottom: 200, // Ajuste o valor conforme necessário
+      
   },
   
   card: {
